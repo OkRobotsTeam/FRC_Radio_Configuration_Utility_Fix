@@ -1,6 +1,6 @@
 Tihs is an attempt to make the broken Radio Configuration Utility work again. 
 
-I decompiled the original, patched the source to change how it checked to see if the changes to the host computers IP address had worked and recompiled.
+I decompiled the original, patched the source to change how it checked to see if the changes to the host computers IP address had worked and recompiled.  I looked for the original source but I couldn't find it anywhere, so I took the ugly route.
 
 I decompiled using Vineflower
 
@@ -13,7 +13,7 @@ Hopefully this helps some people.  My anger and frustration over trying to make 
 This is a quick and dirty fix and I don't really know what I'm doing so use at your own risk, but so far it works for me.
 
 
-The entirety of the fix is in how getLocalhostAddresses works.  Now it simply iterates through all interfaces gathering all addresses instead of trying and failing to get only the addresses of the selected interface.  The problem ended up being that there were many interfaces that matched the selected interface name and mac address, most of which were inactive and did not get the addresses when configured.  The code would only check the first one that matched.  Because of this, while the reconfiguration command worked properly, the check to see if the addresses were configured was usually checking an inactive interface which would never get configured. This is the entirety of the code I added:
+The entirety of the fix is in how getLocalhostAddresses works.  Now it simply iterates through all interfaces gathering all addresses instead of trying and failing to get only the addresses of the selected interface.  The problem ended up being that there were many interfaces that matched the selected interface name and mac address, most of which were inactive and did not get the addresses when configured.  The code would only check the first one that matched.  Because of this, while the reconfiguration command worked properly, the check to see if the addresses were configured was usually checking an inactive interface which would never get configured. This is the new code for generating a list of local IPs:
 
          List<InetAddress> ips = new ArrayList<>();
          for (NetworkInterface nic : buildNicList()) {
