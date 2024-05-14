@@ -28,4 +28,5 @@ The entirety of the fix is in how getLocalhostAddresses works.  Now it simply it
          return ips;
          
 -Eric Garland 
+
 FRC 8708 Programming Mentor
